@@ -1,13 +1,10 @@
 define([
     'game/game-objects/GameObjectBase',
-    'game/Input',
     'lib/Util',
     'three',
-    'physijs',
-    'lib-thirdparty/ColladaLoader'
+    'physijs'
 ], function (
     GameObject,
-    Input,
     Util
 ) {
     "use strict";
@@ -74,7 +71,7 @@ define([
                 document.addEventListener('keydown', function( ev ) {
                     switch ( ev.keyCode ) {
                         case 65: // left
-                            input.direction = 1;
+                            input.direction = 0.5;
                             break;
 
                         case 87: // forward
@@ -82,7 +79,7 @@ define([
                             break;
 
                         case 68: // right
-                            input.direction = -1;
+                            input.direction = -0.5;
                             break;
 
                         case 83: // back
@@ -93,7 +90,7 @@ define([
                 document.addEventListener('keyup', function( ev ) {
                     switch ( ev.keyCode ) {
                         case 65: // left
-                            input.direction = null;
+                            input.direction = 0;
                             break;
 
                         case 87: // forward
@@ -101,7 +98,7 @@ define([
                             break;
 
                         case 68: // right
-                            input.direction = null;
+                            input.direction = 0;
                             break;
 
                         case 83: // back
@@ -115,13 +112,8 @@ define([
             function() {
 
                 if ( input && self.mesh ) {
-                    if ( input.direction !== null ) {
-                        input.steering += input.direction / 20;
-                        if ( input.steering < -.6 ) input.steering = -.6;
-                        if ( input.steering > .6 ) input.steering = .6;
-                    }
-                    self.mesh.setSteering( input.steering, 0 );
-                    self.mesh.setSteering( input.steering, 1 );
+                    self.mesh.setSteering( input.direction, 0 );
+                    self.mesh.setSteering( input.direction, 1 );
 
                     if ( input.power === true ) {
                         self.mesh.applyEngineForce( 600 );

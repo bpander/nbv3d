@@ -3,21 +3,26 @@
  */
 define([
     'game/environments/EnvironmentBase',
-    'game/Input',
     'game/game-objects/Car',
     'game/game-objects/Arena',
-    'three',
-    'physijs'
+    'game/game-objects/ParkingSpots',
+    'three'
 ], function (
     EnvironmentBase,
-    Input,
     Car,
-    Arena
+    Arena,
+    ParkingSpots
 ) {
     "use strict";
 
     var TestWorld = function () {
         EnvironmentBase.call(this);
+
+        /**
+         * A collection of THREEjs light objects in the scene
+         * @type {THREE.Light[]}
+         */
+        this.lights = [];
 
         /**
          * The car that the user drives around
@@ -36,19 +41,27 @@ define([
     TestWorld.prototype.constructor = TestWorld;
 
     TestWorld.prototype.ready = function () {
-        this.game.camera.position.set(0, 50, 0);
+
+        // Set the camera up high and look down on the arena
+        this.game.camera.position.set(0, 60, 0);
         this.game.camera.rotation.set(THREE.Math.degToRad(-90), 0, 0);
 
         // Create lights
-        var ambientLight = new THREE.AmbientLight(0xAAAAAA);
-        this.game.scene.add(ambientLight);
-
-        var directionalLight = new THREE.DirectionalLight(0xFFFFFF, 0.5);
-        directionalLight.position.y = 200;
-        directionalLight.castShadow = true;
-        directionalLight.shadowMapWidth = 2048;
-        directionalLight.shadowMapHeight = 2048;
-        this.game.scene.add(directionalLight);
+        var light = new THREE.DirectionalLight( 0xFFFFFF );
+        light.position.set( 10, 30, -10 );
+        light.target.position.copy( this.game.scene.position );
+        light.castShadow = true;
+        light.shadowCameraLeft = -300;
+        light.shadowCameraTop = -300;
+        light.shadowCameraRight = 300;
+        light.shadowCameraBottom = 300;
+        light.shadowCameraNear = 20;
+        light.shadowCameraFar = 400;
+        light.shadowBias = -.0001
+        light.shadowMapWidth = 2048;
+        light.shadowMapHeight = light.shadowMapWidth;
+        light.shadowDarkness = 0.7;
+        this.game.scene.add(light);
 
         // Create objects
         this.car = new Car().load(function () {
@@ -62,8 +75,10 @@ define([
         }.bind(this));
 
         this.arena = new Arena();
-        this.arena.mesh.position.y = -10;
         this.add(this.arena);
+
+        this.parkingSpots = new ParkingSpots();
+        this.add(this.parkingSpots);
     };
 
     TestWorld.prototype.update = function () {

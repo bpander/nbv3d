@@ -65,13 +65,10 @@ define([
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.renderer.shadowMapEnabled = true;
         this.renderer.shadowMapSoft = true;
-
-        // Append the renderer's dom element and request pointer lock
         document.body.appendChild(this.renderer.domElement);
-        Util.requestPointerLock(this.renderer.domElement);
 
         // Set up the camera and scene
-        this.camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
+        this.camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 1000);
         this.setAspectRatio();
 
         this.scene = new Physijs.Scene();
