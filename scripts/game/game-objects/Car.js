@@ -1,11 +1,9 @@
 define([
     'game/game-objects/GameObjectBase',
-    'lib/Util',
     'three',
     'physijs'
 ], function (
-    GameObject,
-    Util
+    GameObject
 ) {
     "use strict";
 
@@ -24,8 +22,8 @@ define([
     Car.prototype.load = function (fn) {
         var self = this;
         var loader = new THREE.JSONLoader();
-        loader.load('assets/models/mustang/mustang.js', function (car, carMaterials) {
-            loader.load('assets/models/mustang/mustang_wheel.js', function (wheel, wheel_materials) {
+        loader.load('models/mustang/mustang.js', function (car, carMaterials) {
+            loader.load('models/mustang/mustang_wheel.js', function (wheel, wheel_materials) {
                 var mesh = new Physijs.BoxMesh(car, new THREE.MeshFaceMaterial(carMaterials));
                 mesh.position.y = 2;
                 mesh.castShadow = true;

@@ -17,7 +17,7 @@ define([
             transparent: true,
             opacity: 0.75,
             blending: THREE.AdditiveBlending,
-            map: THREE.ImageUtils.loadTexture('assets/textures/parking-spots.png')
+            map: THREE.ImageUtils.loadTexture('textures/parking-spots.png')
         });
 
         this.mesh = new THREE.Mesh(this.geometry, this.material);

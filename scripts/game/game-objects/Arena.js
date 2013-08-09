@@ -17,7 +17,7 @@ define([
                 color: 0xffffff,
                 specular:0xffffff,
                 shininess: 10,
-                map: THREE.ImageUtils.loadTexture( 'assets/textures/cobblestone.jpg' ),
+                map: THREE.ImageUtils.loadTexture('textures/cobblestone.jpg'),
                 combine: THREE.MixOperation,
                 reflectivity: 0.05
             }),
@@ -25,7 +25,7 @@ define([
             .4 // low restitution
         );
         this.material.map.wrapS = this.material.map.wrapT = THREE.RepeatWrapping;
-        this.material.map.repeat.set( 6, 6 );
+        this.material.map.repeat.set(6, 6);
 
         this.geometry = new THREE.PlaneGeometry( this.width, this.depth, 100, 100 );
         this.geometry.computeFaceNormals();

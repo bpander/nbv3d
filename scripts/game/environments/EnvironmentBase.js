@@ -1,4 +1,5 @@
 define([
+    'jquery'
 ], function (
 ) {
     "use strict";
@@ -13,7 +14,7 @@ define([
 
         /**
          * The list of assets to load
-         * @type {Asset[]}
+         * @type {AssetBase[]}
          */
         this.assets = [];
 
@@ -23,6 +24,12 @@ define([
          */
         this.gameObjects = [];
 
+        _init.call(this);
+    };
+
+    var _init = function () {
+        this.progress = this.progress.bind(this);
+        this.ready = this.ready.bind(this);
     };
 
 
@@ -44,6 +51,14 @@ define([
         throw new Error('No update function implemented');
     };
 
+    /**
+     * The callback to execute when the assets make progress loading
+     * @param  {Number} numAssetsLoaded
+     * @param  {Number} numAssets
+     */
+    EnvironmentBase.prototype.progress = function (numAssetsLoaded, numAssets) {
+    };
+
 
     ////////////////////////////////
     // COMMON ENVIRONMENT METHODS //
@@ -51,14 +66,14 @@ define([
 
     /**
      * Start loading the environment. Will load everything in the assets array.
-     * @param  {Function} onLoadFn  A callback to execute when we've finished loading all the assets
+     * @return {Deferred}
      */
-    EnvironmentBase.prototype.load = function (onLoadFn) {
-        // TODO: loading algorithm
-        this.ready();
-        if (onLoadFn instanceof Function) {
-            onLoadFn();
-        }
+    EnvironmentBase.prototype.load = function () {
+        return this.game.loader
+            .load(this.assets)
+            .progress(this.progress.bind(this))
+            .then(this.ready.bind(this))
+        ;
     };
 
     /**

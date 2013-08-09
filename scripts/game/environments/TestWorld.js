@@ -3,12 +3,14 @@
  */
 define([
     'game/environments/EnvironmentBase',
+    'game/asset-loader/assets/AssetJSON',
     'game/game-objects/Car',
     'game/game-objects/Arena',
     'game/game-objects/ParkingSpots',
     'three'
 ], function (
     EnvironmentBase,
+    AssetJSON,
     Car,
     Arena,
     ParkingSpots
@@ -17,6 +19,11 @@ define([
 
     var TestWorld = function () {
         EnvironmentBase.call(this);
+
+        this.assets = {
+            mustang: new AssetJSON('models/mustang/mustang.js'),
+            mustangWheel: new AssetJSON('models/mustang/mustang_wheel.js')
+        };
 
         /**
          * A collection of THREEjs light objects in the scene
