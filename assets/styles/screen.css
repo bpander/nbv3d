@@ -1,0 +1,15 @@
+/**
+ * We're going to display the game full screen so we don't need a lot of css
+ *
+ * @author Brad Anderson
+ */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Even if we're a pixel or two off, make sure we don't show scrollbars */
+}
+
+canvas {
+    display: block;
+}
