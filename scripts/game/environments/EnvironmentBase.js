@@ -14,7 +14,7 @@ define([
 
         /**
          * The list of assets to load
-         * @type {AssetBase[]}
+         * @type {AssetBase{}}
          */
         this.assets = [];
 
@@ -53,10 +53,9 @@ define([
 
     /**
      * The callback to execute when the assets make progress loading
-     * @param  {Number} numAssetsLoaded
-     * @param  {Number} numAssets
+     * @param  {AssetBase} asset  The asset that was just loaded
      */
-    EnvironmentBase.prototype.progress = function (numAssetsLoaded, numAssets) {
+    EnvironmentBase.prototype.progress = function (asset) {
     };
 
 

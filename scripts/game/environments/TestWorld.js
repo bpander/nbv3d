@@ -47,6 +47,10 @@ define([
     TestWorld.prototype = new EnvironmentBase();
     TestWorld.prototype.constructor = TestWorld;
 
+    TestWorld.prototype.progress = function (asset) {
+        console.log('TestWorld progress', arguments);
+    };
+
     TestWorld.prototype.ready = function () {
 
         // Set the camera up high and look down on the arena

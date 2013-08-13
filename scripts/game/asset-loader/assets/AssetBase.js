@@ -1,16 +1,55 @@
 define(function () {
     "use strict";
 
+    /**
+     * The base class to use for all assets that require special loading methods
+     * @param {String} src  What we set the src property as
+     */
     function AssetBase (src) {
 
+        /**
+         * The path to the asset
+         * @type {String}
+         */
         this.src = src;
 
-        this.asset = null;
+        /**
+         * The place to store the data when we load the asset
+         * @type {Object}
+         */
+        this.data = null;
+
+        /**
+         * Keeps track of the loading progress
+         * @type {Deferred}
+         */
+        this.dfd = new $.Deferred();
 
     };
 
+
+    //////////////////////////////
+    // ASSET-SPECIFIC FUNCTIONS //
+    //////////////////////////////
+
+    /**
+     * Each Asset extension will implement this `load` method in its own way but each implementation MUST return the $.Deferred (AssetBase.dfd)
+     * @return {$.Deferred}
+     */
     AssetBase.prototype.load = function () {
-        throw new Error('No load function implemented');
+        return this.dfd.promise();
+    };
+
+
+    //////////////////////////
+    // COMMON ASSET METHODS //
+    //////////////////////////
+
+    /**
+     * Call this when an asset is finished loading
+     */
+    AssetBase.prototype.loadComplete = function () {
+        this.dfd.resolve(this);
     };
 
     return AssetBase;

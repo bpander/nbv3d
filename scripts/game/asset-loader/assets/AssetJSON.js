@@ -10,21 +10,31 @@ define([
     function AssetJSON () {
         AssetBase.apply(this, arguments);
 
-        this.asset = {};
+        this.data = {};
     };
     AssetJSON.prototype = new AssetBase();
     AssetJSON.prototype.constuctor = AssetJSON;
 
+    /**
+     * The object used to load a JSON model we can use with THREEjs
+     * @type {THREE.JSONLoader}
+     * @static
+     * @private
+     */
     var _loader = new THREE.JSONLoader();
 
+    /**
+     * Uses _loader to load some JSON that THREEjs can use
+     * @return {$.Deferred}
+     */
     AssetJSON.prototype.load = function () {
-        var dfd = new $.Deferred();
         _loader.load(this.src, function (model, materials) {
-            this.asset.model = model;
-            this.asset.materials = materials;
-            dfd.resolve();
+            this.data.model = model;
+            this.data.materials = materials;
+            this.loadComplete();
         }.bind(this));
-        return dfd.promise();
+
+        return AssetBase.prototype.load.call(this);
     };
 
     return AssetJSON;
