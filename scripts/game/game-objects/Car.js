@@ -1,9 +1,11 @@
 define([
     'game/game-objects/GameObjectBase',
+    'game/Input',
     'three',
     'physijs'
 ], function (
-    GameObject
+    GameObject,
+    Input
 ) {
     "use strict";
 
@@ -28,9 +30,61 @@ define([
         this.mesh.mesh.position.y = 2;
         this.mesh.mesh.castShadow = true;
         this.mesh.mesh.receiveShadow = true;
+
+        this._onKeyDown = this._onKeyDown.bind(this);
+
+        this._onKeyUp = this._onKeyUp.bind(this);
+
     };
     Car.prototype = new GameObject();
     Car.prototype.constructor = Car;
+
+    Car.prototype._onKeyDown = function (e) {
+        switch (e.keyCode) {
+            case Input.KEYS.W:
+                this.mesh.applyEngineForce(600);
+                break;
+
+            case Input.KEYS.A:
+                this.mesh.setSteering(0.5, 0);
+                this.mesh.setSteering(0.5, 1);
+                break;
+
+            case Input.KEYS.S:
+                this.mesh.setBrake(20, 2);
+                this.mesh.setBrake(20, 3);
+                break;
+
+            case Input.KEYS.D:
+                this.mesh.setSteering(-0.5, 0);
+                this.mesh.setSteering(-0.5, 1);
+                break;
+        }
+    };
+
+    Car.prototype._onKeyUp = function (e) {
+        switch (e.keyCode) {
+            case Input.KEYS.W:
+                this.mesh.applyEngineForce(0);
+                break;
+
+            case Input.KEYS.S:
+                this.mesh.setBrake(0, 2);
+                this.mesh.setBrake(0, 3);
+                break;
+
+            case Input.KEYS.A:
+            case Input.KEYS.D:
+                this.mesh.setSteering(0, 0);
+                this.mesh.setSteering(0, 1);
+                break;
+        }
+    };
+
+    Car.prototype.enableControl = function (doEnableControl) {
+        window.addEventListener('keydown', this._onKeyDown);
+        window.addEventListener('keyup', this._onKeyUp);
+    };
 
     Car.prototype.addWheels = function () {
         var wheel = this.wheel.model;
@@ -56,9 +110,6 @@ define([
 
     Car.prototype.add = function () {
         this.addWheels();
-    };
-
-    Car.prototype.update = function () {
     };
 
     Car.prototype.destroy = function () {

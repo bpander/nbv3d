@@ -45,8 +45,6 @@ define([
 
     Arena.prototype.add = function () {};
 
-    Arena.prototype.update = function () {};
-
 
     return Arena;
 });

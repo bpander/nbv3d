@@ -45,13 +45,6 @@ define([
     };
 
     /**
-     * This runs every frame to update the environment. Each environment should have a unique `update` callback
-     */
-    EnvironmentBase.prototype.update = function () {
-        throw new Error('No update function implemented');
-    };
-
-    /**
      * The callback to execute when the assets make progress loading
      * @param  {AssetBase} asset  The asset that was just loaded
      */
@@ -73,18 +66,6 @@ define([
             .progress(this.progress.bind(this))
             .then(this.ready.bind(this))
         ;
-    };
-
-    /**
-     * Loops through all of the objects added to this environment and runs their update functions
-     */
-    EnvironmentBase.prototype.updateObjects = function () {
-        // Run all the game objects' update functions
-        var i = 0;
-        var l = this.gameObjects.length;
-        for (; i !== l; i++) {
-            this.gameObjects[i].update();
-        }
     };
 
     /**

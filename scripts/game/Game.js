@@ -1,11 +1,9 @@
 define([
     'game/asset-loader/Loader',
-    'game/Input',
     'three',
     'physijs'
 ], function (
-    Loader,
-    Input
+    Loader
 ) {
     "use strict";
 
@@ -47,11 +45,9 @@ define([
          */
         this.loader = new Loader();
 
-        /**
-         * Helper object for determining input events
-         * @type {Input}
-         */
-        this.input = new Input();
+        this.animate = this.animate.bind(this);
+
+        this._onResize = this._onResize.bind(this);
 
         _init.call(this);
     };
@@ -75,38 +71,16 @@ define([
         this.scene.add(this.camera);
 
         // Get the ball rolling...
-        this.bindScope();
         this.bindEvents();
-
-        return this;
     };
 
     /**
      * The animation loop
      */
     Game.prototype.animate = function () {
-        this.render();
-        requestAnimationFrame(this.animate);
-    };
-
-    /**
-     * Run the physics simulation, update the environment, and render the scene
-     */
-    Game.prototype.render = function () {
         this.scene.simulate(undefined, 2);
-        this.environment.updateObjects();
-        this.environment.update();
         this.renderer.render(this.scene, this.camera);
-    };
-
-    /**
-     * Binds the `this` argument for any function that needs it
-     * @return {Game}
-     */
-    Game.prototype.bindScope = function () {
-        this.onResize = this.onResize.bind(this);
-        this.animate = this.animate.bind(this);
-        return this;
+        requestAnimationFrame(this.animate);
     };
 
     /**
@@ -114,7 +88,7 @@ define([
      * @return {Game}
      */
     Game.prototype.bindEvents = function () {
-        window.addEventListener('resize', this.onResize, false);
+        window.addEventListener('resize', this._onResize, false);
         return this;
     };
 
@@ -130,7 +104,7 @@ define([
         return this;
     };
 
-    Game.prototype.onResize = function () {
+    Game.prototype._onResize = function () {
         this.setAspectRatio();
     };
 

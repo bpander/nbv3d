@@ -3,7 +3,6 @@
  */
 define([
     'game/environments/EnvironmentBase',
-    'game/Input',
     'game/asset-loader/assets/AssetJSON',
     'game/game-objects/Car',
     'game/game-objects/Arena',
@@ -11,7 +10,6 @@ define([
     'three'
 ], function (
     EnvironmentBase,
-    Input,
     AssetJSON,
     Car,
     Arena,
@@ -78,6 +76,7 @@ define([
 
         // Create objects
         this.car = new Car(this.assets.mustang.data, this.assets.mustangWheel.data);
+        this.car.enableControl();
         this.add(this.car);
 
         var secondCar = new Car(this.assets.mustang.data, this.assets.mustangWheel.data);
@@ -89,35 +88,6 @@ define([
 
         this.parkingSpots = new ParkingSpots();
         this.add(this.parkingSpots);
-    };
-
-    TestWorld.prototype.update = function () {
-        if (!this.car) {
-            return;
-        }
-
-        if (this.game.input.isKeyDown(Input.KEYS.W)) {
-            // TODO: Refactor so this doesnt get called every update
-            this.car.mesh.applyEngineForce(600);
-        } else if (this.game.input.isKeyDown(Input.KEYS.S)) {
-            this.car.mesh.setBrake(20, 2);
-            this.car.mesh.setBrake(20, 3);
-        } else {
-            // TODO: Refactor so this doesnt get called every update
-            this.car.mesh.applyEngineForce(0);
-        }
-
-        // TODO: Refactor so this doesnt get called every update
-        if (this.game.input.isKeyDown(Input.KEYS.A)) {
-            this.car.mesh.setSteering(0.5, 0);
-            this.car.mesh.setSteering(0.5, 1);
-        } else if (this.game.input.isKeyDown(Input.KEYS.D)) {
-            this.car.mesh.setSteering(-0.5, 0);
-            this.car.mesh.setSteering(-0.5, 1);
-        } else {
-            this.car.mesh.setSteering(0, 0);
-            this.car.mesh.setSteering(0, 1);
-        }
     };
 
 

@@ -28,8 +28,6 @@ define([
 
     ParkingSpots.prototype.add = function () {};
 
-    ParkingSpots.prototype.update = function () {};
-
 
     return ParkingSpots;
 });
