@@ -95,6 +95,7 @@ define([
         gameObject.environment = this;
         this.gameObjects.push(gameObject);
         this.game.scene.add(gameObject.mesh);
+        gameObject.add();
         return this;
     };
 

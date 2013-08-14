@@ -3,6 +3,7 @@
  */
 define([
     'game/environments/EnvironmentBase',
+    'game/Input',
     'game/asset-loader/assets/AssetJSON',
     'game/game-objects/Car',
     'game/game-objects/Arena',
@@ -10,6 +11,7 @@ define([
     'three'
 ], function (
     EnvironmentBase,
+    Input,
     AssetJSON,
     Car,
     Arena,
@@ -68,22 +70,19 @@ define([
         light.shadowCameraBottom = 300;
         light.shadowCameraNear = 20;
         light.shadowCameraFar = 400;
-        light.shadowBias = -.0001
+        light.shadowBias = -.0001;
         light.shadowMapWidth = 2048;
         light.shadowMapHeight = light.shadowMapWidth;
         light.shadowDarkness = 0.7;
         this.game.scene.add(light);
 
         // Create objects
-        this.car = new Car().load(function () {
-            this.car.controls = true;
-            this.add(this.car);
-        }.bind(this));
+        this.car = new Car(this.assets.mustang.data, this.assets.mustangWheel.data);
+        this.add(this.car);
 
-        var secondCar = new Car().load(function () {
-            secondCar.mesh.mesh.position.set(10, 2, 0);
-            this.add(secondCar);
-        }.bind(this));
+        var secondCar = new Car(this.assets.mustang.data, this.assets.mustangWheel.data);
+        secondCar.mesh.mesh.position.set(10, 2, 0);
+        this.add(secondCar);
 
         this.arena = new Arena();
         this.add(this.arena);
@@ -93,6 +92,32 @@ define([
     };
 
     TestWorld.prototype.update = function () {
+        if (!this.car) {
+            return;
+        }
+
+        if (this.game.input.isKeyDown(Input.KEYS.W)) {
+            // TODO: Refactor so this doesnt get called every update
+            this.car.mesh.applyEngineForce(600);
+        } else if (this.game.input.isKeyDown(Input.KEYS.S)) {
+            this.car.mesh.setBrake(20, 2);
+            this.car.mesh.setBrake(20, 3);
+        } else {
+            // TODO: Refactor so this doesnt get called every update
+            this.car.mesh.applyEngineForce(0);
+        }
+
+        // TODO: Refactor so this doesnt get called every update
+        if (this.game.input.isKeyDown(Input.KEYS.A)) {
+            this.car.mesh.setSteering(0.5, 0);
+            this.car.mesh.setSteering(0.5, 1);
+        } else if (this.game.input.isKeyDown(Input.KEYS.D)) {
+            this.car.mesh.setSteering(-0.5, 0);
+            this.car.mesh.setSteering(-0.5, 1);
+        } else {
+            this.car.mesh.setSteering(0, 0);
+            this.car.mesh.setSteering(0, 1);
+        }
     };
 
 

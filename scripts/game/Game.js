@@ -1,9 +1,11 @@
 define([
     'game/asset-loader/Loader',
+    'game/Input',
     'three',
     'physijs'
 ], function (
-    Loader
+    Loader,
+    Input
 ) {
     "use strict";
 
@@ -44,6 +46,12 @@ define([
          * @type {Loader}
          */
         this.loader = new Loader();
+
+        /**
+         * Helper object for determining input events
+         * @type {Input}
+         */
+        this.input = new Input();
 
         _init.call(this);
     };

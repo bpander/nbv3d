@@ -26,8 +26,9 @@ define([
 
     };
 
-    ParkingSpots.prototype.update = function () {
-    };
+    ParkingSpots.prototype.add = function () {};
+
+    ParkingSpots.prototype.update = function () {};
 
 
     return ParkingSpots;

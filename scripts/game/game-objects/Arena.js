@@ -43,8 +43,9 @@ define([
     Arena.prototype = new GameObjectBase();
     Arena.prototype.constructor = Arena;
 
-    Arena.prototype.update = function () {
-    };
+    Arena.prototype.add = function () {};
+
+    Arena.prototype.update = function () {};
 
 
     return Arena;
