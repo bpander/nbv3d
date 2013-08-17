@@ -27,17 +27,21 @@ define([
                 6000
             )
         );
-        this.mesh.mesh.position.y = 2;
-        this.mesh.mesh.castShadow = true;
-        this.mesh.mesh.receiveShadow = true;
 
         this._onKeyDown = this._onKeyDown.bind(this);
 
         this._onKeyUp = this._onKeyUp.bind(this);
 
+        _init.call(this);
     };
     Car.prototype = new GameObject();
     Car.prototype.constructor = Car;
+
+    var _init = function () {
+        this.mesh.mesh.position.y = 2;
+        this.mesh.mesh.castShadow = true;
+        this.mesh.mesh.receiveShadow = true;
+    };
 
     Car.prototype._onKeyDown = function (e) {
         switch (e.keyCode) {
@@ -81,9 +85,14 @@ define([
         }
     };
 
-    Car.prototype.enableControl = function (doEnableControl) {
+    Car.prototype.enableControl = function () {
         window.addEventListener('keydown', this._onKeyDown);
         window.addEventListener('keyup', this._onKeyUp);
+    };
+
+    Car.prototype.disableControl = function () {
+        window.removeEventListener('keydown', this._onKeyDown);
+        window.removeEventListener('keyup', this._onKeyUp);
     };
 
     Car.prototype.addWheels = function () {
@@ -110,12 +119,6 @@ define([
 
     Car.prototype.add = function () {
         this.addWheels();
-    };
-
-    Car.prototype.destroy = function () {
-    };
-
-    Car.prototype.bindEvents = function () {
     };
 
 

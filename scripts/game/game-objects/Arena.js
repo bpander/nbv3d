@@ -21,8 +21,8 @@ define([
                 combine: THREE.MixOperation,
                 reflectivity: 0.05
             }),
-            .8, // high friction
-            .4 // low restitution
+            0.1, // low friction
+            3.4 // high restitution
         );
         this.material.map.wrapS = this.material.map.wrapT = THREE.RepeatWrapping;
         this.material.map.repeat.set(6, 6);

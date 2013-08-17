@@ -29,16 +29,16 @@ define([
          * A collection of THREEjs light objects in the scene
          * @type {THREE.Light[]}
          */
-        this.lights = [];
+        this.light = new THREE.DirectionalLight(0xFFFFFF);
 
         /**
-         * The car that the user drives around
-         * @type {Car}
+         * The cars that have been spawned
+         * @type {Car[]}
          */
-        this.car = null;
+        this.cars = [];
 
         /**
-         * The arena that holds the car
+         * The arena that holds the cars
          * @type {Arena}
          */
         this.arena = null;
@@ -54,40 +54,41 @@ define([
     TestWorld.prototype.ready = function () {
 
         // Set the camera up high and look down on the arena
-        this.game.camera.position.set(0, 60, 0);
+        this.game.camera.position.set(0, 100, 0);
         this.game.camera.rotation.set(THREE.Math.degToRad(-90), 0, 0);
 
-        // Create lights
-        var light = new THREE.DirectionalLight( 0xFFFFFF );
-        light.position.set( 10, 30, -10 );
-        light.target.position.copy( this.game.scene.position );
-        light.castShadow = true;
-        light.shadowCameraLeft = -300;
-        light.shadowCameraTop = -300;
-        light.shadowCameraRight = 300;
-        light.shadowCameraBottom = 300;
-        light.shadowCameraNear = 20;
-        light.shadowCameraFar = 400;
-        light.shadowBias = -.0001;
-        light.shadowMapWidth = 2048;
-        light.shadowMapHeight = light.shadowMapWidth;
-        light.shadowDarkness = 0.7;
-        this.game.scene.add(light);
-
-        // Create objects
-        this.car = new Car(this.assets.mustang.data, this.assets.mustangWheel.data);
-        this.car.enableControl();
-        this.add(this.car);
-
-        var secondCar = new Car(this.assets.mustang.data, this.assets.mustangWheel.data);
-        secondCar.mesh.mesh.position.set(10, 2, 0);
-        this.add(secondCar);
+        // Setup light rig
+        this.light.position.set( 10, 100, -10 );
+        this.light.target.position.copy( this.game.scene.position );
+        this.light.castShadow = true;
+        this.light.shadowCameraLeft = -300;
+        this.light.shadowCameraTop = -300;
+        this.light.shadowCameraRight = 300;
+        this.light.shadowCameraBottom = 300;
+        this.light.shadowCameraNear = 20;
+        this.light.shadowCameraFar = 400;
+        this.light.shadowBias = -.0001;
+        this.light.shadowMapWidth = 2048;
+        this.light.shadowMapHeight = this.light.shadowMapWidth;
+        this.light.shadowDarkness = 0.7;
+        this.game.scene.add(this.light);
 
         this.arena = new Arena();
         this.add(this.arena);
 
         this.parkingSpots = new ParkingSpots();
         this.add(this.parkingSpots);
+
+        this.spawnCar();
+    };
+
+    TestWorld.prototype.spawnCar = function () {
+        var car = new Car(this.assets.mustang.data, this.assets.mustangWheel.data);
+        car.mesh.mesh.position.set(-30, 2, 0);
+        car.mesh.mesh.rotation.y = THREE.Math.degToRad(90);
+        car.enableControl();
+        this.add(car);
+        // car.mesh.applyEngineForce(600);
     };
 
 
