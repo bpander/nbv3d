@@ -77,18 +77,13 @@ define([
         this.add(this.arena);
 
         this.parkingSpots = new ParkingSpots();
+        this.parkingSpots.mesh.position.z = -10.5;
         this.add(this.parkingSpots);
 
-        this.spawnCar();
-    };
+        var parkingSpots = new ParkingSpots();
+        parkingSpots.mesh.position.z = 10.5;
+        this.add(parkingSpots);
 
-    TestWorld.prototype.spawnCar = function () {
-        var car = new Car(this.assets.mustang.data, this.assets.mustangWheel.data);
-        car.mesh.mesh.position.set(-30, 2, 0);
-        car.mesh.mesh.rotation.y = THREE.Math.degToRad(90);
-        car.enableControl();
-        this.add(car);
-        // car.mesh.applyEngineForce(600);
     };
 
 
