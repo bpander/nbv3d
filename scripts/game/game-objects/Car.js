@@ -17,14 +17,17 @@ define([
         this.wheel = wheel;
 
         this.mesh = new Physijs.Vehicle(
-            new Physijs.BoxMesh(this.body.model, new THREE.MeshFaceMaterial(this.body.materials)),
+            new Physijs.BoxMesh(
+                new THREE.CubeGeometry(3.5, 1, 6),
+                new THREE.MeshLambertMaterial({ color: 0xff6666 })
+            ),
             new Physijs.VehicleTuning(
-                10.88,
+                15.88,
                 1.83,
                 0.28,
                 500,
-                10.5,
-                6000
+                0.5,
+                4000
             )
         );
 
@@ -38,7 +41,7 @@ define([
     Car.prototype.constructor = Car;
 
     var _init = function () {
-        this.mesh.mesh.position.y = 2;
+        this.mesh.mesh.position.y = 200;
         this.mesh.mesh.castShadow = true;
         this.mesh.mesh.receiveShadow = true;
     };
@@ -46,12 +49,12 @@ define([
     Car.prototype._onKeyDown = function (e) {
         switch (e.keyCode) {
             case Input.KEYS.W:
-                this.mesh.applyEngineForce(600);
+                this.mesh.applyEngineForce(100);
                 break;
 
             case Input.KEYS.A:
-                this.mesh.setSteering(0.5, 0);
-                this.mesh.setSteering(0.5, 1);
+                this.mesh.setSteering(0.6, 0);
+                this.mesh.setSteering(0.6, 1);
                 break;
 
             case Input.KEYS.S:
@@ -60,8 +63,8 @@ define([
                 break;
 
             case Input.KEYS.D:
-                this.mesh.setSteering(-0.5, 0);
-                this.mesh.setSteering(-0.5, 1);
+                this.mesh.setSteering(-0.6, 0);
+                this.mesh.setSteering(-0.6, 1);
                 break;
         }
     };
@@ -73,8 +76,8 @@ define([
                 break;
 
             case Input.KEYS.S:
-                this.mesh.setBrake(0, 2);
-                this.mesh.setBrake(0, 3);
+                this.mesh.setBrake(0.5, 2);
+                this.mesh.setBrake(0.5, 3);
                 break;
 
             case Input.KEYS.A:
@@ -104,17 +107,19 @@ define([
                 wheel,
                 wheelMaterial,
                 new THREE.Vector3(
-                        i % 2 === 0 ? -1.6 : 1.6,
-                        -1,
-                        i < 2 ? 3.3 : -3.2
+                        i % 2 === 0 ? -2 : 2,
+                        -0.25,
+                        i < 2 ? 2.25 : -2.25
                 ),
                 new THREE.Vector3( 0, -1, 0 ),
                 new THREE.Vector3( -1, 0, 0 ),
-                0.5,
+                0.2,
                 0.7,
                 i < 2 ? false : true
             );
         }
+        this.mesh.setBrake(0.5, 2);
+        this.mesh.setBrake(0.5, 3);
     };
 
     Car.prototype.add = function () {

@@ -13,15 +13,15 @@ define([
 
         this.depth = this.width;
 
-        this.height = 1;
+    this.height = 1;
 
         this.material = Physijs.createMaterial(
             new THREE.MeshLambertMaterial({
                 color: 0xffffff,
                 map: THREE.ImageUtils.loadTexture('textures/cobblestone.jpg'),
             }),
-            0.1, // low friction
-            3.4 // high restitution
+            0.1, // friction
+            3.4  // restitution
         );
         this.material.map.wrapS = this.material.map.wrapT = THREE.RepeatWrapping;
         this.material.map.repeat.set(6, 6);
