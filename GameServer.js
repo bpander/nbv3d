@@ -7,8 +7,6 @@ function GameServer () {
 
     this.onConnection = this.onConnection.bind(this);
 
-    this.onKeyDown = this.onKeyDown.bind(this);
-
 }
 
 GameServer.prototype.start = function (server) {
@@ -19,13 +17,7 @@ GameServer.prototype.start = function (server) {
 };
 
 GameServer.prototype.onConnection = function (socket) {
-    socket.on('keydown', this.onKeyDown);
-};
-
-GameServer.prototype.onKeyDown = function () {
-    this.sockets.forEach(function (socket) {
-        socket.emit.apply('socket.keydown', );
-    };
+    // socket.on('keydown', this.onKeyDown);
 };
 
 module.exports = GameServer;
