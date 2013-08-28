@@ -4,16 +4,16 @@
 define([
     'game/environments/EnvironmentBase',
     'game/asset-loader/assets/AssetJSON',
-    'game/game-objects/Car',
     'game/game-objects/Arena',
     'game/game-objects/ParkingSpots',
+    'game/models/Player',
     'three'
 ], function (
     EnvironmentBase,
     AssetJSON,
-    Car,
     Arena,
-    ParkingSpots
+    ParkingSpots,
+    Player
 ) {
     "use strict";
 
@@ -21,9 +21,13 @@ define([
         EnvironmentBase.call(this);
 
         this.assets = {
-            mustang: new AssetJSON('models/mustang/mustang.js'),
             mustangWheel: new AssetJSON('models/mustang/mustang_wheel.js')
         };
+
+        this.players = [
+            new Player(TestWorld.PLAYER_SLOTS[0]),
+            new Player(TestWorld.PLAYER_SLOTS[1])
+        ];
 
         /**
          * A collection of THREEjs light objects in the scene
@@ -31,13 +35,7 @@ define([
          */
         this.light = new THREE.DirectionalLight(0xFFFFFF);
 
-        /**
-         * The cars that have been spawned
-         * @type {Car[]}
-         */
-        this.cars = [];
-
-        this.activeCar = null;
+        this.numCarsSpawned = 0;
 
         /**
          * The arena that holds the cars
@@ -51,6 +49,43 @@ define([
     TestWorld.prototype = new EnvironmentBase();
     TestWorld.prototype.constructor = TestWorld;
 
+    TestWorld.PLAYER_SLOTS = [
+        {
+            body: 0xff0000,
+            spawnPoints: [
+                {
+                    position: { x: -65, y: 2, z: -21 },
+                    rotation: { x: 0, y: THREE.Math.degToRad(90), z: 0 },
+                    velocity: { x: 50, y: 0, z: 0 }
+                },
+                {
+                    position: { x: -65, y: 2, z: 21 },
+                    rotation: { x: 0, y: THREE.Math.degToRad(90), z: 0 },
+                    velocity: { x: 50, y: 0, z: 0 }
+                }
+            ]
+        },
+        {
+            body: 0x0000ff,
+            spawnPoints: [
+                {
+                    position: { x: 65, y: 2, z: -21 },
+                    rotation: { x: 0, y: THREE.Math.degToRad(-90), z: 0 },
+                    velocity: { x: -50, y: 0, z: 0 }
+                },
+                {
+                    position: { x: 65, y: 2, z: 21 },
+                    rotation: { x: 0, y: THREE.Math.degToRad(-90), z: 0 },
+                    velocity: { x: -50, y: 0, z: 0 }
+                }
+            ]
+        }
+    ];
+
+    TestWorld.NUM_AVAILABLE_CARS = 20;
+
+    TestWorld.INACTIVE_CAR_VELOCITY = 1;
+
     TestWorld.prototype.progress = function (asset) {
         console.log('TestWorld progress', arguments);
     };
@@ -61,9 +96,7 @@ define([
 
         // Set the camera up high and look down on the arena
         this.game.camera.position.set(0, 100, 0);
-
         this.game.camera.rotation.set(THREE.Math.degToRad(-90), 0, 0);
-        // this.game.camera.lookAt( this.game.scene.position );
 
         // Setup light rig
         this.light.position.set( 10, 100, -10 );
@@ -92,26 +125,29 @@ define([
         parkingSpots.mesh.position.z = 10.5;
         this.add(parkingSpots);
 
-        this.spawnCar();
-    };
-
-    TestWorld.prototype.spawnCar = function () {
-        var car = new Car(this.assets.mustang.data, this.assets.mustangWheel.data);
-        car.mesh.mesh.position.set(-65, 2, -21);
-        car.mesh.mesh.rotation.y = THREE.Math.degToRad(90);
-        car.enableControl();
-        this.add(car);
-        car.mesh.mesh.setLinearVelocity(new THREE.Vector3(50, 0, 0));
-        this.cars.push(car);
-        this.activeCar = car;
+        this.players.forEach(function (player) {
+            player.spawnCar(this.assets.mustangWheel.data, this);
+            this.numCarsSpawned = this.numCarsSpawned + 1;
+        }, this);
     };
 
     TestWorld.prototype.onUpdate = function () {
-        var limit = 2;
-        var velocity = this.activeCar.mesh.mesh.getLinearVelocity();
-        if (Math.abs(velocity.x) < limit && Math.abs(velocity.y) < limit && Math.abs(velocity.z) < limit) {
-            this.activeCar.disableControl();
-            this.spawnCar();
+        var player;
+        var velocity;
+        var i = 0;
+        var l = this.players.length;
+        for (; i !== l; i++) {
+            player = this.players[i];
+            velocity = player.cars[0].mesh.mesh.getLinearVelocity();
+            if (
+                Math.abs(velocity.x) < TestWorld.INACTIVE_CAR_VELOCITY &&
+                Math.abs(velocity.y) < TestWorld.INACTIVE_CAR_VELOCITY &&
+                Math.abs(velocity.z) < TestWorld.INACTIVE_CAR_VELOCITY
+            ) {
+                player.cars[0].disableControl();
+                player.spawnCar(this.assets.mustangWheel.data, this);
+                this.numCarsSpawned = this.numCarsSpawned + 1;
+            }
         }
     };
 

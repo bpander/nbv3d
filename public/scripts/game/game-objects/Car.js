@@ -19,7 +19,7 @@ define([
         this.mesh = new Physijs.Vehicle(
             new Physijs.BoxMesh(
                 new THREE.CubeGeometry(3.5, 1, 6),
-                new THREE.MeshLambertMaterial({ color: 0xff6666 })
+                new THREE.MeshLambertMaterial({ color: this.body })
             ),
             new Physijs.VehicleTuning(
                 15.88,
@@ -53,10 +53,9 @@ define([
             return;
         }
         switch (e.keyCode) {
-            case Input.KEYS.W:
-                console.log('w');
-                this.mesh.applyEngineForce(100);
-                break;
+            // case Input.KEYS.W:
+            //     this.mesh.applyEngineForce(100);
+            //     break;
 
             case Input.KEYS.A:
                 this.mesh.setSteering(0.6, 0);
@@ -79,9 +78,9 @@ define([
     Car.prototype._onKeyUp = function (e) {
         delete this._firedKeys[e.keyCode];
         switch (e.keyCode) {
-            case Input.KEYS.W:
-                this.mesh.applyEngineForce(0);
-                break;
+            // case Input.KEYS.W:
+            //     this.mesh.applyEngineForce(0);
+            //     break;
 
             case Input.KEYS.S:
                 this.mesh.setBrake(0.5, 2);
