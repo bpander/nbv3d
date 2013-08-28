@@ -1,5 +1,5 @@
 require([
-    'lib-thirdparty/ready',
+    'vendor/ready',
     'game/Game',
     'game/environments/TestWorld'
 ], function (

@@ -8,7 +8,7 @@ define([
 ) {
     "use strict";
 
-    Physijs.scripts.worker = 'scripts/lib-thirdparty/physijs_worker.js';
+    Physijs.scripts.worker = 'scripts/vendor/physijs_worker.js';
 
     /**
      * Holds all the info about your game
