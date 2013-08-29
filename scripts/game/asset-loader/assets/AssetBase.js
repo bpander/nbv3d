@@ -1,4 +1,8 @@
-define(function () {
+define([
+    'vendor/q.min'
+], function (
+    Q
+) {
     "use strict";
 
     /**
@@ -23,7 +27,7 @@ define(function () {
          * Keeps track of the loading progress
          * @type {Deferred}
          */
-        this.dfd = new $.Deferred();
+        this.dfd = new Q.defer();
 
     };
 
@@ -33,11 +37,11 @@ define(function () {
     //////////////////////////////
 
     /**
-     * Each Asset extension will implement this `load` method in its own way but each implementation MUST return the $.Deferred (AssetBase.dfd)
-     * @return {$.Deferred}
+     * Each Asset extension will implement this `load` method in its own way but each implementation MUST return the Q.Deferred (AssetBase.dfd)
+     * @return {Q.Deferred}
      */
     AssetBase.prototype.load = function () {
-        return this.dfd.promise();
+        return this.dfd.promise;
     };
 
 

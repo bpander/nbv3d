@@ -1,21 +1,21 @@
 define([
-    'jquery'
-], function () {
+    'vendor/q.min'
+], function (
+    Q
+) {
     "use strict";
 
     function Loader () {};
 
     Loader.prototype.load = function (assets) {
-        var dfd = new $.Deferred();
         var dfds = [];
         var assetDfd;
         var prop;
         for (prop in assets) {
-            assetDfd = assets[prop].load().then(dfd.notify);
+            assetDfd = assets[prop].load();
             dfds.push(assetDfd);
         }
-        $.when.apply($, dfds).then(dfd.resolve, dfd.reject);
-        return dfd.promise();
+        return Q.all(dfds);
     };
 
     return Loader;

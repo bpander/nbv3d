@@ -1,7 +1,6 @@
 define([
     'game/asset-loader/assets/AssetBase',
-    'three',
-    'jquery'
+    'three'
 ], function (
     AssetBase
 ) {
@@ -25,7 +24,7 @@ define([
 
     /**
      * Uses _loader to load some JSON that THREEjs can use
-     * @return {$.Deferred}
+     * @return {Q.Deferred}
      */
     AssetJSON.prototype.load = function () {
         _loader.load(this.src, function (model, materials) {

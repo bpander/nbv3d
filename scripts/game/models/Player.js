@@ -1,11 +1,9 @@
 define([
     'game/models/SpawnPoint',
-    'game/game-objects/Car',
-    'jquery'
+    'game/game-objects/Car'
 ], function (
     SpawnPoint,
-    Car,
-    $
+    Car
 ) {
     'use strict';
 
@@ -19,7 +17,7 @@ define([
 
         this.spawnPoints = [];
 
-        if ($.isPlainObject(json)) {
+        if (json instanceof Object) {
             this.convertFromJson(json);
         }
     };

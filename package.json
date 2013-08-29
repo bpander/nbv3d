@@ -1,5 +1,6 @@
 {
-  "name": "nbv3d:afolm",
+  "name": "nbv3d",
+  "repository": "https://github.com/bpander/nbv3d.git",
   "version": "0.0.1",
   "private": false,
   "scripts": {
