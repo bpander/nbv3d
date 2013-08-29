@@ -10,6 +10,7 @@
     "socket.io": "~0.9.14",
     "socket.io-client": "~0.9.16",
     "ejs": "~0.8.4",
-    "amdefine": "0.0.8"
+    "amdefine": "0.0.8",
+    "requirejs": "~2.1.8"
   }
 }
