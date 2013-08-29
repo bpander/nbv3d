@@ -1,23 +1,32 @@
-var socketIO = require('socket.io');
-
-
-function GameServer () {
-
-    this.io = null;
-
-    this.onConnection = this.onConnection.bind(this);
-
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module);
 }
 
-GameServer.prototype.start = function (server) {
-    this.io = socketIO.listen(server);
-    this.io.set('log level', 1);
+define([
+    'socket.io'
+], function (
+    socketIO
+) {
+    'use strict';
 
-    this.io.sockets.on('connection', this.onConnection);
-};
+    function GameServer () {
 
-GameServer.prototype.onConnection = function (socket) {
-    // socket.on('keydown', this.onKeyDown);
-};
+        this.io = null;
 
-module.exports = GameServer;
+        this.onConnection = this.onConnection.bind(this);
+
+    }
+
+    GameServer.prototype.start = function (server) {
+        this.io = socketIO.listen(server);
+        this.io.set('log level', 1);
+
+        this.io.sockets.on('connection', this.onConnection);
+    };
+
+    GameServer.prototype.onConnection = function (socket) {
+        // socket.on('keydown', this.onKeyDown);
+    };
+
+    return GameServer;
+});

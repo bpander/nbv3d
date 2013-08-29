@@ -1,4 +1,4 @@
-require([
+requirejs([
     'vendor/ready',
     'game/Game',
     'game/environments/TestWorld'

@@ -9,6 +9,10 @@ var require = {
 
     shim: {
         'physijs': ['three']
-    }
+    },
+
+    deps: [
+        'settings'
+    ]
 
 };

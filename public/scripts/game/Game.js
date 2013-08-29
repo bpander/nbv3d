@@ -73,7 +73,7 @@ define([
         this.scene.setGravity(new THREE.Vector3( 0, -30, 0 ));
         this.scene.add(this.camera);
 
-        this.socket = io.connect('http://10.20.2.143');
+        this.socket = io.connect(SETTINGS.GAME_SERVER_ADDRESS);
 
         // Get the ball rolling...
         this.bindEvents();
