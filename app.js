@@ -7,7 +7,7 @@ var GameServer = require('./GameServer.js');
 
 // Configuration
 app.set('port', process.env.TEST_PORT || 80);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/')));
 app.engine('html', ejs.renderFile);
 
 // Routes

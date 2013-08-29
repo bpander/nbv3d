@@ -1,8 +1,7 @@
 define([
     'game/asset-loader/Loader',
     'three',
-    'physijs',
-    'socket.io'
+    'physijs'
 ], function (
     Loader
 ) {
@@ -46,8 +45,6 @@ define([
          */
         this.loader = new Loader();
 
-        this.socket = null;
-
         this.animate = this.animate.bind(this);
 
         this._onResize = this._onResize.bind(this);
@@ -72,8 +69,6 @@ define([
         this.scene = new Physijs.Scene();
         this.scene.setGravity(new THREE.Vector3( 0, -30, 0 ));
         this.scene.add(this.camera);
-
-        this.socket = io.connect(SETTINGS.GAME_SERVER_ADDRESS);
 
         // Get the ball rolling...
         this.bindEvents();
