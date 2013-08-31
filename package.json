@@ -1,6 +1,7 @@
 {
   "name": "nbv3d",
   "description": "A 3D version of No Brakes Valet",
+  "author": "Brad Anderson",
   "repository": {
     "type": "git",
     "url": "https://github.com/bpander/nbv3d"
@@ -13,14 +14,9 @@
   "dependencies": {
     "express": "3.1.1",
     "socket.io": "0.9.14",
-    "socket.io-client": "0.9.16",
-    "ejs": "0.8.4",
-    "amdefine": "0.0.8",
     "requirejs": "2.1.8"
   },
-  "main": "index.js",
   "scripts": {
     "start": "node index.js"
-  },
-  "author": "Brad Anderson"
+  }
 }
