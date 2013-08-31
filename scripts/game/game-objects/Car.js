@@ -1,11 +1,13 @@
 define([
     'game/game-objects/GameObjectBase',
     'game/Input',
-    'three',
-    'physijs'
+    'THREE',
+    'Physijs'
 ], function (
     GameObject,
-    Input
+    Input,
+    THREE,
+    Physijs
 ) {
     "use strict";
 

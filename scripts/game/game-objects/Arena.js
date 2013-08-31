@@ -1,8 +1,11 @@
 define([
     'game/game-objects/GameObjectBase',
-    'three'
+    'THREE',
+    'Physijs'
 ], function (
-    GameObjectBase
+    GameObjectBase,
+    THREE,
+    Physijs
 ) {
     "use strict";
 
@@ -13,7 +16,7 @@ define([
 
         this.depth = this.width;
 
-    this.height = 1;
+        this.height = 1;
 
         this.material = Physijs.createMaterial(
             new THREE.MeshLambertMaterial({

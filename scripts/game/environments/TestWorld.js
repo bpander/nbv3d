@@ -7,13 +7,14 @@ define([
     'game/game-objects/Arena',
     'game/game-objects/ParkingSpots',
     'game/models/Player',
-    'three'
+    'THREE'
 ], function (
     EnvironmentBase,
     AssetJSON,
     Arena,
     ParkingSpots,
-    Player
+    Player,
+    THREE
 ) {
     "use strict";
 

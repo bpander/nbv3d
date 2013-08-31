@@ -1,6 +1,9 @@
-'use strict';
-
-window.Physijs = (function() {
+define([
+	'THREE'
+], function(
+	THREE
+) {
+	'use strict';
 	var THREE_REVISION = parseInt( THREE.REVISION, 10 ),
 		SUPPORT_TRANSFERABLE,
 		_matrix = new THREE.Matrix4, _is_simulating = false,
@@ -1396,4 +1399,4 @@ window.Physijs = (function() {
 	};
 
 	return Physijs;
-})();
+});

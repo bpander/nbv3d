@@ -4,14 +4,9 @@ var config = function (requirejs) {
         baseUrl: 'scripts',
 
         paths: {
-            'three': 'vendor/three.min',
-            'physijs': 'vendor/physi',
-            'socket.io-client': 'vendor/socket.io-client/socket.io',
-            'jquery': 'vendor/jquery-2.0.3.min'
-        },
-
-        shim: {
-            'physijs': ['three']
+            'THREE': 'vendor/three.min',
+            'Physijs': 'vendor/physi',
+            'socket.io-client': 'vendor/socket.io-client/socket.io'
         }
 
     });

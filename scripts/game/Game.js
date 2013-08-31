@@ -1,9 +1,11 @@
 define([
     'game/asset-loader/Loader',
-    'three',
-    'physijs'
+    'THREE',
+    'Physijs'
 ], function (
-    Loader
+    Loader,
+    THREE,
+    Physijs
 ) {
     "use strict";
 

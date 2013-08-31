@@ -1,5 +1,7 @@
 define([
+    'THREE'
 ], function (
+    THREE
 ) {
     "use strict";
 

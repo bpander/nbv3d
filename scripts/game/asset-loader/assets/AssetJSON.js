@@ -1,8 +1,9 @@
 define([
     'game/asset-loader/assets/AssetBase',
-    'three'
+    'THREE'
 ], function (
-    AssetBase
+    AssetBase,
+    THREE
 ) {
     "use strict";
 
