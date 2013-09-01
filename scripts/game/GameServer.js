@@ -1,7 +1,11 @@
 define([
-    'socket.io'
+    'socket.io',
+    'game/Game',
+    'game/environments/TestWorld'
 ], function (
-    socketIO
+    socketIO,
+    Game,
+    TestWorld
 ) {
     'use strict';
 
@@ -10,6 +14,8 @@ define([
         this.io = null;
 
         this.onConnection = this.onConnection.bind(this);
+
+        var game = new Game();
 
     }
 

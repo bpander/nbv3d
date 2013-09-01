@@ -1,7 +1,9 @@
 define([
-	'THREE'
+	'THREE',
+	'PhysijsWorker'
 ], function(
-	THREE
+	THREE,
+	PhysijsWorker
 ) {
 	'use strict';
 	var THREE_REVISION = parseInt( THREE.REVISION, 10 ),
@@ -396,7 +398,7 @@ define([
 		Eventable.call( this );
 		THREE.Scene.call( this );
 
-		this._worker = new Worker( Physijs.scripts.worker || 'physijs_worker.js' );
+		this._worker = new PhysijsWorker( Physijs.scripts.worker || 'physijs_worker.js' );
 		this._worker.transferableMessage = this._worker.webkitPostMessage || this._worker.postMessage;
 		this._materials = {};
 		this._objects = {};
@@ -459,7 +461,6 @@ define([
 
 						default:
 							// Do nothing, just show the message
-							console.debug('Received: ' + data.cmd);
 							console.dir(data.params);
 							break;
 					}

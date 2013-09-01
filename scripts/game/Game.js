@@ -60,39 +60,45 @@ define([
      */
     var _init = function () {
 
-        // Create the renderer
+        this.scene = new Physijs.Scene();
+        this.scene.setGravity(new THREE.Vector3( 0, -30, 0 ));
+
+        // If this is server-side, we're done!
+        if (Game.isServer) {
+            return;
+        }
+
+        // Create the renderer for client-side
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.renderer.shadowMapEnabled = true;
         this.renderer.shadowMapSoft = true;
+        this.render = function () {
+            this.renderer.render(this.scene, this.camera);
+        }.bind(this);
 
-        // Set up the camera and scene
+        // Set up the camera and add it to the scene
         this.camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 1000);
-
-        this.scene = new Physijs.Scene();
-        this.scene.setGravity(new THREE.Vector3( 0, -30, 0 ));
         this.scene.add(this.camera);
 
-        // Get the ball rolling...
-        this.bindEvents();
+        // Adjust the aspect ratio if the user resizes their browser
+        window.addEventListener('resize', this._onResize, false);
     };
+
+    Game.isServer = typeof document === 'undefined';
 
     /**
      * The animation loop
      */
     Game.prototype.animate = function () {
         this.scene.simulate(undefined, 2);
-        this.renderer.render(this.scene, this.camera);
+        this.render();
         requestAnimationFrame(this.animate);
     };
 
     /**
-     * Binds any event handlers
-     * @return {Game}
+     * By default, render is a no-op, but if we detect that we are client-side, we'll redefine `Game.render` to actually render the scene
      */
-    Game.prototype.bindEvents = function () {
-        window.addEventListener('resize', this._onResize, false);
-        return this;
-    };
+    Game.prototype.render = function () {};
 
     /**
      * Update the aspect ratio for THREEjs
