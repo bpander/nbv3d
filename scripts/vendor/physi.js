@@ -6,6 +6,8 @@ define([
 	PhysijsWorker
 ) {
 	'use strict';
+
+	var window = window || {};
 	var THREE_REVISION = parseInt( THREE.REVISION, 10 ),
 		SUPPORT_TRANSFERABLE,
 		_matrix = new THREE.Matrix4, _is_simulating = false,
@@ -406,7 +408,6 @@ define([
 		this._constraints = {};
 
 		var ab = new ArrayBuffer( 1 );
-		this._worker.transferableMessage( ab, [ab] );
 		SUPPORT_TRANSFERABLE = ( ab.byteLength === 0 );
 
 		this._worker.onmessage = function ( event ) {
@@ -490,6 +491,7 @@ define([
 			}
 		};
 
+		this._worker.transferableMessage( ab, [ab] );
 
 		params = params || {};
 		params.ammo = Physijs.scripts.ammo || 'ammo.js';

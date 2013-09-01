@@ -39,7 +39,7 @@ define([
         car.mesh.mesh.rotation.copy(spawnPoint.rotation);
         environment.add(car);
         car.mesh.mesh.setLinearVelocity(spawnPoint.velocity);
-        car.enableControl();
+        // car.enableControl();
         this.cars.unshift(car);
         return car;
     };

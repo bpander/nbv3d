@@ -74,6 +74,12 @@ if (typeof self === 'undefined') {
 		CONSTRAINTREPORT_ITEMSIZE = 6, // constraint id, offset object, offset, applied impulse
 		constraintreport;
 
+	self.setParent = function (parent) {
+		transferableMessage = function (data) {
+			parent.onmessage.call(null, { data: data });
+		};
+	};
+
 	var ab = new ArrayBuffer( 1 );
 	transferableMessage( ab, [ab] );
 	var SUPPORT_TRANSFERABLE = ( ab.byteLength === 0 );

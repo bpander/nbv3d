@@ -13,6 +13,7 @@ define([
         this.onmessage = function () {};
 
         this.worker = require(task);
+        this.worker.setParent(this);
 
     };
 

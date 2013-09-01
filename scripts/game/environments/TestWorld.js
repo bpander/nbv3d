@@ -136,7 +136,6 @@ define([
     };
 
     TestWorld.prototype.onUpdate = function () {
-        console.log('update');
         var player;
         var velocity;
         var i = 0;
@@ -149,7 +148,7 @@ define([
                 Math.abs(velocity.y) < TestWorld.INACTIVE_CAR_VELOCITY &&
                 Math.abs(velocity.z) < TestWorld.INACTIVE_CAR_VELOCITY
             ) {
-                player.cars[0].disableControl();
+                // player.cars[0].disableControl();
                 player.spawnCar(this.assets.mustangWheel.data, this);
                 this.numCarsSpawned = this.numCarsSpawned + 1;
             }
