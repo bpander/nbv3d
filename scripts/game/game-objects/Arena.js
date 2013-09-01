@@ -18,16 +18,20 @@ define([
 
         this.height = 1;
 
+        // TODO: Clean this up
+        var materialProperties = { color: 0xffffff };
+        if (typeof window !== 'undefined') {
+            materialProperties.map = THREE.ImageUtils.loadTexture('textures/cobblestone.jpg');
+        }
         this.material = Physijs.createMaterial(
-            new THREE.MeshLambertMaterial({
-                color: 0xffffff,
-                map: THREE.ImageUtils.loadTexture('http://localhost/textures/cobblestone.jpg'),
-            }),
+            new THREE.MeshLambertMaterial(materialProperties),
             0.1, // friction
             3.4  // restitution
         );
-        this.material.map.wrapS = this.material.map.wrapT = THREE.RepeatWrapping;
-        this.material.map.repeat.set(6, 6);
+        if (this.material.map !== null) {
+            this.material.map.wrapS = this.material.map.wrapT = THREE.RepeatWrapping;
+            this.material.map.repeat.set(6, 6);
+        }
 
         this.geometry = new THREE.CubeGeometry(this.width, this.height, this.depth);
 

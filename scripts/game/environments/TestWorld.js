@@ -117,12 +117,10 @@ define([
         this.light.shadowDarkness = 0.7;
         this.game.scene.add(this.light);
 
-        console.log('setting up arena');
         this.arena = new Arena();
-        console.log('adding arena');
         this.add(this.arena);
-        console.log('arena set up');
 
+        // TODO: Store both ParkingSpots instances together or don't store either
         this.parkingSpots = new ParkingSpots();
         this.parkingSpots.mesh.position.z = -10.5;
         this.add(this.parkingSpots);

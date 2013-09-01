@@ -15,12 +15,16 @@ define([
         this.geometry.computeFaceNormals();
         this.geometry.computeVertexNormals();
 
-        this.material = new THREE.MeshLambertMaterial({
+        // TODO: Clean this up
+        var materialProperties = {
             transparent: true,
             opacity: 0.66,
-            blending: THREE.AdditiveBlending,
-            map: THREE.ImageUtils.loadTexture('textures/parking-spots.png')
-        });
+            blending: THREE.AdditiveBlending
+        };
+        if (typeof window !== 'undefined') {
+            materialProperties.map = THREE.ImageUtils.loadTexture('textures/parking-spots.png');
+        }
+        this.material = new THREE.MeshLambertMaterial(materialProperties);
 
         this.mesh = new THREE.Mesh(this.geometry, this.material);
         this.mesh.rotation.x = THREE.Math.degToRad(-90);
