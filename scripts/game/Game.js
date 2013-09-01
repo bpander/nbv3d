@@ -10,6 +10,9 @@ define([
     "use strict";
 
     Physijs.scripts.worker = 'scripts/vendor/physijs_worker.js';
+    var requestAnimationFrame = requestAnimationFrame || function (callback) {
+        setTimeout(callback, 16.67);
+    };
 
     /**
      * Holds all the info about your game
