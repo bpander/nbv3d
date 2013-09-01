@@ -22,7 +22,7 @@ define([
         EnvironmentBase.call(this);
 
         this.assets = {
-            mustangWheel: new AssetJSON('models/mustang/mustang_wheel.js')
+            mustangWheel: new AssetJSON('http://localhost/models/mustang/mustang_wheel.js')
         };
 
         this.players = [
@@ -96,8 +96,10 @@ define([
         this.game.scene.addEventListener('update', this.onUpdate);
 
         // Set the camera up high and look down on the arena
-        this.game.camera.position.set(0, 100, 0);
-        this.game.camera.rotation.set(THREE.Math.degToRad(-90), 0, 0);
+        if (this.game.camera !== null) {
+            this.game.camera.position.set(0, 100, 0);
+            this.game.camera.rotation.set(THREE.Math.degToRad(-90), 0, 0);
+        }
 
         // Setup light rig
         this.light.position.set( 10, 100, -10 );
@@ -115,8 +117,11 @@ define([
         this.light.shadowDarkness = 0.7;
         this.game.scene.add(this.light);
 
+        console.log('setting up arena');
         this.arena = new Arena();
+        console.log('adding arena');
         this.add(this.arena);
+        console.log('arena set up');
 
         this.parkingSpots = new ParkingSpots();
         this.parkingSpots.mesh.position.z = -10.5;
@@ -133,6 +138,7 @@ define([
     };
 
     TestWorld.prototype.onUpdate = function () {
+        console.log('update');
         var player;
         var velocity;
         var i = 0;

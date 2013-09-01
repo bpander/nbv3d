@@ -21,7 +21,7 @@ define([
         this.material = Physijs.createMaterial(
             new THREE.MeshLambertMaterial({
                 color: 0xffffff,
-                map: THREE.ImageUtils.loadTexture('textures/cobblestone.jpg'),
+                map: THREE.ImageUtils.loadTexture('http://localhost/textures/cobblestone.jpg'),
             }),
             0.1, // friction
             3.4  // restitution

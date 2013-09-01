@@ -16,6 +16,9 @@ define([
         this.onConnection = this.onConnection.bind(this);
 
         var game = new Game();
+        var testWorld = new TestWorld();
+
+        game.loadEnvironment(testWorld).then(game.animate);
 
     }
 

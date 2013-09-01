@@ -14,7 +14,8 @@
   "dependencies": {
     "express": "3.1.1",
     "socket.io": "0.9.14",
-    "requirejs": "2.1.8"
+    "requirejs": "2.1.8",
+    "xmlhttprequest": "~1.6.0"
   },
   "scripts": {
     "start": "node index.js"
